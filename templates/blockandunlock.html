@@ -1,0 +1,108 @@
+{% extends 'dashbord.html' %}
+
+{% block body %}
+        <style>
+        @media only screen and (min-width: 1200px) {
+            .table-margin {
+                margin-left: 230px;
+            }
+        }
+    </style>
+  <!-- Search Form (Optional) -->
+  <form action="search_user_block" method="post" class="mb-4 table-margin">
+    <div class="input-group">
+      <input type="text" class="form-control" placeholder="Search by Name" name="textfield" value="{{ name }}">
+      <button class="btn btn-primary" type="submit">Search</button>
+    </div>
+  </form>
+ <div class="table-margin">
+  <!-- Cards Section -->
+{#  <div class="container">#}
+{#    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">#}
+{#      {% for i in data %}#}
+{#        <!-- Check if search filter matches name -->#}
+{#        <div class="col-12 col-sm-6 col-md-4 mb-4">#}
+{#          <div class="card h-100">#}
+{#            {% if i.photo %}#}
+{#              <img src="{{ i.photo.url }}" class="card-img-top" alt="Photo of {{ i.name }}">#}
+{#            {% endif %}#}
+{#            <div class="card-body">#}
+{#              <h5 class="card-title">{{ i.name }}</h5>#}
+{#              <p class="card-text">#}
+{#                <strong>Email:</strong> {{ i.email }}<br>#}
+{#                <strong>Pin:</strong> {{ i.pin }}<br>#}
+{#                <strong>Place:</strong> {{ i.place }}<br>#}
+{#                <strong>Post:</strong> {{ i.post }}<br>#}
+{#                <strong>Phone:</strong> {{ i.phone }}#}
+{#              </p>#}
+{#             <div align="center">#}
+{#                   {% if i.LOGIN.type == 'user' %}#}
+{#           <a href="/block_user/{{ i.LOGIN.id }}" class="btn btn-danger">Block</a>#}
+{##}
+{#      {% else %}#}
+{#          <a href="/unblock_user/{{ i.LOGIN.id }}" class="btn btn-info">Unblock</a>#}
+{#      {% endif %}#}
+{##}
+{#             </div>#}
+{#            </div>#}
+{#          </div>#}
+{#        </div>#}
+{#      {% endfor %}#}
+{#    </div>#}
+{#  </div>#}
+{#{% endblock %}#}
+
+
+
+ <div class="container">
+    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">
+
+    <table class="table">
+  <thead>
+    <tr>
+      <th scope="col">SI no</th>
+      <th scope="col">image</th>
+      <th scope="col">name</th>
+      <th scope="col">email</th>
+        <th scope="col">gender
+        </th>
+
+        <th scope="col">Phone</th>
+        <th scope="col">place</th>
+        <th scope="col">pin</th>
+        <th scope="col">post</th>
+        <th scope="col">block and unblock</th>
+
+
+    </tr>
+  </thead>
+  <tbody>
+        {% for i in data %}
+
+    <tr>
+      <th scope="row">{{ forloop.counter }}</th>
+      <td><img src="{{ i.photo.url }}" width="50" height="50" alt="Photo of {{ i.name }}">
+</td>
+      <td>{{ i.first_name }} {{ i.last_name }}</td>
+      <td> {{ i.email }}</td>
+        <td> {{ i.gender }}</td>
+    <td> {{ i.phone }}</td>
+    <td> {{ i.place }}</td>
+    <td> {{ i.pin }}</td>
+    <td> {{ i.post }}</td>
+    <td>{% if i.LOGIN.type == 'user' %}
+           <a href="/block_user/{{ i.LOGIN.id }}" class="btn btn-danger">Block</a>
+
+      {% else %}
+          <a href="/unblock_user/{{ i.LOGIN.id }}" class="btn btn-info">Unblock</a>
+      {% endif %}</td>
+    </tr>
+{% endfor %}
+  </tbody>
+</table>
+
+    </div>
+ </div>
+  </div>
+{% endblock %}
+

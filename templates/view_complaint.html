@@ -1,0 +1,103 @@
+
+{% extends 'dashbord.html' %}
+
+{% block body %}
+    <style>
+        @media only screen and (min-width: 1200px) {
+            .table-margin {
+                margin-left: 230px;
+            }
+        }
+    </style>
+ <form action="/complaint_search" method="post" class="mb-4 table-margin" >
+    {% csrf_token %}
+
+    <!-- Heading for the form -->
+    <h4 class="mb-4">Filter by Date Range</h4>
+
+    <!-- Start Date, End Date, and Search Button in a single row -->
+    <div class="form-row align-items-center">
+        <!-- Start Date Input -->
+        <div class="col-sm-4 mb-3">
+            <label for="start_date" class="sr-only">Start Date:</label>
+            <input type="date" class="form-control" id="sd" name="start_date" value="{{ a }}" placeholder="Start Date" max="{{ d }}" onchange="changedate()" required>
+        </div>
+
+        <!-- End Date Input -->
+        <div class="col-sm-4 mb-3">
+            <label for="end_date" class="sr-only">End Date:</label>
+            <input type="date" class="form-control" id="ed" name="end_date" value="{{ b }}" placeholder="End Date" max="{{ d }}"required>
+        </div>
+
+        <!-- Search Button -->
+        <div class="col-sm-4 mb-3">
+            <button class="btn btn-primary btn-lg w-100" type="submit">Search</button>
+        </div>
+    </div>
+</form>
+
+
+
+  <!-- Cards Section -->
+  <div class="container">
+{#    <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 row-cols-lg-4 g-4">#}
+{#      {% for i in data %}#}
+        <!-- Check if search filter matches name -->
+{#        {% if not request.GET.search or i.name|lower contains request.GET.search|lower %}#}
+
+
+
+<form action="" method="post" class="table-margin">
+<table width="200" border="1" class="table table-hover">
+  <tr>
+    <td>User</td>
+    <td>Date</td>
+    <td>Complaint</td>
+          <td>Replay</td>
+          <td>Status</td>
+
+  </tr>
+  {% for i in data %}
+  <tr>
+    <td><img src="{{ i.USER.photo.url }}" width="100" height="100"/><br/> {{ i.USER.name }}</td>
+    <td>&nbsp;{{ i.date}}</td>
+      <td>{{ i.complaint}}</td>
+  <td>
+      {% if i.replay == 'pending' %}
+      <a href="/send_reply/{{ i.id }}">Reply</a>
+      {% else %}
+      {{ i.replay }}<br>
+          <a href="/edit_reply/{{ i.id }}">Edit Reply</a>
+    {% endif %}
+
+</td>
+  <td>{{ i.status }}</td>
+
+  </tr>
+  {% endfor %}
+</table>
+
+</form>
+
+
+              </div>
+            </div>
+
+          </div>
+{#        {% endif %}#}
+{#      {% endfor %}#}
+{#    </div>#}
+  </div>
+    <script>
+    function changedate()
+    {
+
+        var d=document.getElementById("sd").value;
+          document.getElementById('ed').setAttribute('min', d);}
+    </script>
+{% endblock %}
+
+
+
+
+{
